@@ -1,0 +1,14 @@
+ARG BASE_DISTRO_IMAGE
+ARG BASE_DISTRO_VERSION
+
+FROM $BASE_DISTRO_IMAGE:$BASE_DISTRO_VERSION
+RUN apk add --no-cache curl bash iputils net-tools kafkacat jq
+RUN set -ex mkdir -p /opt/bin/
+WORKDIR /opt/bin
+COPY etcdctl .
+COPY grafana-datasource.sh .
+COPY svc-discovery.sh .
+ENV PATH="/opt/bin:${PATH}"
+#RUN md5sum /opt/bin/*
+RUN ls -lrt
+CMD ["/bin/bash"]
