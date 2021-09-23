@@ -31,7 +31,7 @@ COMMON_ARG="--no-cache"
 #COMMON_ARG=""
 
 ##NANO SEC timestamp LABEL, to enable multiple build in same system
-echo -e "\e[1;32;40m[XGVela-SVC-INIT-BUILD] Build MICROSERVICE_NAME:$MICROSERVICE_NAME, Version:$MICROSERVICE_VERSION \e[0m"
+echo -e "[XGVela-SVC-INIT-BUILD] Build MICROSERVICE_NAME:$MICROSERVICE_NAME, Version:$MICROSERVICE_VERSION"
 docker build --rm \
              $COMMON_ARG \
              --build-arg BASE_DISTRO_IMAGE=$BASE_DISTRO_IMAGE \
@@ -39,12 +39,12 @@ docker build --rm \
              -f ./build_spec/init_dockerfile \
              -t $MICROSERVICE_NAME:$MICROSERVICE_VERSION .
 
-echo -e "\e[1;32;40m[XGVela-SVC-INIT-BUILD] Setting Artifacts Environment \e[0m"
+echo -e "[XGVela-SVC-INIT-BUILD] Setting Artifacts Environment"
 rm -rf $ARTIFACTS_PATH
 mkdir -p $ARTIFACTS_PATH
 mkdir -p $ARTIFACTS_PATH/images
 
-echo -e "\e[1;32;40m[XGVela-SVC-INIT-BUILD] Releasing Artifacts... @$ARTIFACTS_PATH \e[0m"
+echo -e "[XGVela-SVC-INIT-BUILD] Releasing Artifacts... @$ARTIFACTS_PATH"
 docker save $MICROSERVICE_NAME:$MICROSERVICE_VERSION | gzip > $ARTIFACTS_PATH/images/$MICROSERVICE_NAME-$MICROSERVICE_VERSION.tar.gz
 
 docker rmi -f $MICROSERVICE_NAME:$MICROSERVICE_VERSION
